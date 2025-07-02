@@ -23,14 +23,14 @@ class ArucoPoseEstimator(Node):
         # Image subscriber
         self.image_subscription = self.create_subscription(
             Image,
-            '/camera/camera/color/image_raw',  # Correct topic
+            '/camera/color/image_raw',  # Correct topic
             self.image_callback,
             10)
 
         # CameraInfo subscriber for color camera
         self.camera_info_subscription = self.create_subscription(
             CameraInfo,
-            '/camera/camera/color/camera_info',  # Correct topic
+            '/camera/color/camera_info',  # Correct topic
             self.camera_info_callback,
             10)
         self.camera_info_received = False  # Flag to track if we have camera info
@@ -78,13 +78,13 @@ class ArucoPoseEstimator(Node):
 
         if ids is not None:
             rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
-                corners, 0.1, self.camera_matrix,
+                corners, 0.07, self.camera_matrix,
                 self.dist_coeffs)  # 0.1 is marker size
 
             for i in range(len(ids)):
                 cv2.aruco.drawDetectedMarkers(cv_image, corners, ids)
                 cv2.drawFrameAxes(cv_image, self.camera_matrix,
-                                  self.dist_coeffs, rvecs[i], tvecs[i], 0.1)
+                                  self.dist_coeffs, rvecs[i], tvecs[i], 0.07)
 
         try:
             overlay_msg = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")

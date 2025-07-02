@@ -25,16 +25,21 @@ def generate_launch_description():
         description="Model of AR4",
     )
 
-    realsense = IncludeLaunchDescription(
+    orbbec = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
                 os.path.join(
-                    get_package_share_directory("realsense2_camera"),
+                    get_package_share_directory("orbbec_camera"),
                     "launch",
-                    "rs_launch.py",
+                    "gemini_330_series.launch.py",
                 )
             ]
-        )
+        ),
+        launch_arguments={
+            'enumerate_net_device': 'true',
+            'net_device_ip': '192.168.1.10',
+            'net_device_port': '8090',
+        }.items()
     )
 
     aruco_params = os.path.join(
@@ -84,7 +89,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             ar_model_arg,
-            realsense,
+            orbbec,
             hand_eye_tf_publisher,
             aruco_recognition_node,
             follow_aruco_node,

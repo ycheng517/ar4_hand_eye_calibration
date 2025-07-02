@@ -41,16 +41,16 @@ Import required repos with:
 vcs import . --input ar4_hand_eye_calibration/hand_eye_calibration.repos
 ```
 
-Install the required drivers and ROS 2 nodes for your camera. For example for Intel RealSense:
-
-```bash
-sudo apt install ros-iron-librealsense2* ros-iron-realsense2-*
-```
-
 Install dependencies of imported repos:
 
 ```bash
 sudo apt update && rosdep install --from-paths . --ignore-src -y
+```
+
+Build release, default is Debug:
+
+```bash
+colcon build --event-handlers  console_direct+  --cmake-args  -DCMAKE_BUILD_TYPE=Release
 ```
 
 ## Calibrate

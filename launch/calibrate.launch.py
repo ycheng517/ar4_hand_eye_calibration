@@ -8,16 +8,21 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
 def generate_launch_description():
-    realsense = IncludeLaunchDescription(
+    orbbec = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
                 os.path.join(
-                    get_package_share_directory("realsense2_camera"),
+                    get_package_share_directory("orbbec_camera"),
                     "launch",
-                    "rs_launch.py",
+                    "gemini_330_series.launch.py",
                 )
             ]
-        )
+        ),
+        launch_arguments={
+            'enumerate_net_device': 'true',
+            'net_device_ip': '192.168.1.10',
+            'net_device_port': '8090',
+        }.items()
     )
 
     ar_moveit_launch = PythonLaunchDescriptionSource(
@@ -96,7 +101,7 @@ def generate_launch_description():
     )
 
     ld = LaunchDescription()
-    ld.add_action(realsense)
+    ld.add_action(orbbec)
     ld.add_action(static_tf_publisher)
     ld.add_action(ar_moveit)
     ld.add_action(aruco_recognition_node)

@@ -11,3 +11,7 @@ repositories:
     type: git
     url: https://github.com/AndrejOrsula/pymoveit2.git
     version: main
+  OrbbecSDK_ROS2:
+    type: git
+    url: https://github.com/orbbec/OrbbecSDK_ROS2.git
+    version: v2-main
